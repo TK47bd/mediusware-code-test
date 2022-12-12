@@ -19,11 +19,38 @@ class ProductController extends Controller
     {
 
         $Variants = Variant::with('product_variants')->get();
-        $Products = Product::with('product_variants')->get();
+        $Products = Product::with('product_variants')->paginate(10);
         $ProductVariants = ProductVariant::with('products', 'variants')->get();
-        $ProductVariantPrices = ProductVariantPrice::all();
+        //$ProductVariantPrices = ProductVariantPrice::with('product_variants', 'products')->get();
 
-        return view('products.index', compact("Products", "ProductVariants", "ProductVariantPrices"));
+        return view('products.index', compact("Products", "ProductVariants"));
+    }
+
+    public function Searched(Request $req)
+    {
+        if ($req->variant != '') {
+            $Variants = Variant::with('product_variants')->where('title', $req->variant)->get();
+        } else {
+            $Variants = Variant::with('product_variants')->get();
+        }
+
+        if ($req->title != '' && $req->date != '') {
+            $Products = Product::with('product_variants')->where('title', 'LIKE', '%' . $req->title . '%')->whereDate('updated_at', '=', $req->date)->paginate(10);
+        } elseif ($req->title != '' && $req->date == '') {
+            $Products = Product::with('product_variants')->where('title', 'LIKE', '%' . $req->title . '%')->paginate(10);
+        } elseif ($req->title == '' && $req->date != '') {
+            $Products = Product::with('product_variants')->whereDate('updated_at', '=', $req->date)->paginate(10);
+        } else {
+            $Products = Product::with('product_variants')->paginate(10);
+        }
+
+        $ProductVariants = ProductVariant::with('products', 'variants')->get();
+
+        // if($req->price_from!='' && $req->price_to!=''){
+        // $ProductVariantPrices = ProductVariantPrice::with('product_variants', 'products')->whereBetween('price', [$req->price_from, $req->price_to])->get();
+        // }
+
+        return view('products.index', compact("Products", "ProductVariants", "Variants"));
     }
 
     /**

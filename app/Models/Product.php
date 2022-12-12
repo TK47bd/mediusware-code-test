@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\ProductVariant;
+use App\Models\ProductVariantPrice;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -15,4 +16,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductVariant::class);
     }
+
+    // public function product_variant_price()
+    // {
+    //     return $this->hasMany(ProductVariantPrice::class);
+    // }
 }
