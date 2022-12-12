@@ -18,9 +18,9 @@ class ProductController extends Controller
     public function index()
     {
 
-        //$Variants = Variant::with('product_variants')->get();
+        $Variants = Variant::with('product_variants')->get();
         $Products = Product::with('product_variants')->get();
-        $ProductVariants = ProductVariant::with('product')->get();
+        $ProductVariants = ProductVariant::with('products', 'variants')->get();
         $ProductVariantPrices = ProductVariantPrice::all();
 
         return view('products.index', compact("Products", "ProductVariants", "ProductVariantPrices"));

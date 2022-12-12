@@ -64,11 +64,15 @@
 
                                 <dt class="col-sm-3 pb-0">
                                     @foreach($product->product_variants as $key=>$product_variant)
-                                    {{ $product_variant->variant }}
 
+                                    @foreach($product_variant->Variants as $variant)
+
+                                    {{$variant->title}}
                                     @if(!$loop->last)
                                     <br />
                                     @endif
+
+                                    @endforeach
 
                                     @endforeach
                                 </dt>

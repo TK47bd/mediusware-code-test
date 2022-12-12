@@ -12,13 +12,13 @@ class ProductVariant extends Model
         'variant', 'variant_id', 'product_id'
     ];
 
-    public function product()
+    public function products()
     {
         return $this->belongsTo(Product::class);
     }
 
-    // public function variant()
-    // {
-    //     return $this->hasMany(Variant::class);
-    // }
+    public function variants()
+    {
+        return $this->hasMany(Variant::class, 'id', 'variant_id');
+    }
 }

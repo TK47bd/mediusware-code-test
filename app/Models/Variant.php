@@ -11,8 +11,8 @@ class Variant extends Model
         'title', 'description'
     ];
 
-    // public function product_variants()
-    // {
-    //     return $this->belongsTo(ProductVariant::class);
-    // }
+    public function product_variants()
+    {
+        return $this->belongsTo(ProductVariant::class, 'variant_id', 'id');
+    }
 }
