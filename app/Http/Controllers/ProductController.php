@@ -17,7 +17,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('products.index');
+
+        //$Variants = Variant::with('product_variants')->get();
+        $Products = Product::with('product_variants')->get();
+        $ProductVariants = ProductVariant::with('product')->get();
+        $ProductVariantPrices = ProductVariantPrice::all();
+
+        return view('products.index', compact("Products", "ProductVariants", "ProductVariantPrices"));
     }
 
     /**
@@ -39,7 +45,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
     }
 
 
@@ -51,7 +56,6 @@ class ProductController extends Controller
      */
     public function show($product)
     {
-
     }
 
     /**
